@@ -97,6 +97,7 @@ def main():
     parser.add_argument("--file", required=False, help="Input video file")
     parser.add_argument("--model", required=False, help="Input *.pbmm model file")
     parser.add_argument("--scorer", required=False, help="Input *.scorer file")
+    parser.add_argument("--audio-filter", dest="audio_filter", help="ffmpeg audio filter")
     
     args = parser.parse_args()
     
@@ -144,7 +145,7 @@ def main():
             output_file_handle_dict[format].write("Kind: captions\n\n")
 
     clean_folder(audio_directory)
-    extract_audio(input_file, audio_file_name)
+    extract_audio(input_file, audio_file_name, args.audio_filter)
 
     _logger.info("Splitting on silent parts in audio file")
     remove_silent_segments(audio_file_name)
